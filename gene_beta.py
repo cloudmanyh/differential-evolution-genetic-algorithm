@@ -20,9 +20,6 @@ def species_origin(population_size,chromosome_length):
     # 生成特定规模的种群
     for i in range(population_size):
         chromosome = generate_chromosome(chromosome_length)
-        chromosome[0] = 1
-        chromosome[1] = 1
-        chromosome[2] = 1
         population.append(chromosome)
             # 将种群返回，种群是个二维数组，个体和染色体两维
     return population
