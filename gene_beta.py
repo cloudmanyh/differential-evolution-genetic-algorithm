@@ -129,7 +129,7 @@ def population_homogeneity_analysis(population, population_size):
     for i in range(1, population_size):
         chromosome = np.array(population[i])
         if (chromosome == np.array(population[0])).all() != True:
-            print(i, 'false')
+            # print(i, 'false')
             flag = False
             break
     return flag
@@ -227,8 +227,8 @@ if __name__ == "__main__":
     crossover_rate, mutation_rate = 0.6, 0.5
     update_scale, update_count = round(population_size / 2), 3
     var_range = [2, 9]
-    iteration_num = 10
-    optimal_type = True # 优化类型是最大化
+    iteration_num = 100
+    optimal_type = True # 优化类型是最小化
     optimal_func_list = []
     optimal_var_list = []
     optimal_pop_list = []
@@ -236,8 +236,8 @@ if __name__ == "__main__":
     population = species_origin(population_size, chromosome_length)
     # print('population', len(population), population)
     for i in range(iteration_num):
-        print('*********************** ', i, ' ***********************')
-        print('population', len(population), population)
+        # print('*********************** ', i, ' ***********************')
+        # print('population', len(population), population)
         translation_result = population_translation(population,chromosome_length, var_range)
         #print('translation', len(translation_result), translation_result)
         func = get_cost_function(translation_result)
@@ -249,18 +249,17 @@ if __name__ == "__main__":
         optimal_var_list.append(optimal_var)
         optimal_pop_list.append(optimal_pop)
         population = species_selection(population, population_size, fitness)
-        print('species_select', len(population), population)
+        #print('species_select', len(population), population)
         if i < iteration_num - 1:
             homogeneity_flag = population_homogeneity_analysis(population, population_size)
-            print('homogeneity_flag', homogeneity_flag)
+            #print('homogeneity_flag', homogeneity_flag)
             if homogeneity_flag is True and update_count > 0:
                 population = population_update(population, update_scale, chromosome_length)
                 update_count = update_count - 1
-                print('更新后population', len(population), population)
-            print('交叉前population', len(population), population)
+                #print('更新后population', len(population), population)
+            #print('交叉前population', len(population), population)
             population = crossover(population, chromosome_length, crossover_rate, var_range, optimal_type)
-            print('变异前population', len(population), population)
+            #print('变异前population', len(population), population)
             population = mutation(population, chromosome_length, mutation_rate, var_range, optimal_type)
-        print('变异后population', len(population), population)
-
+        #print('变异后population', len(population), population)
     result_show(optimal_func_list, optimal_var_list, optimal_pop_list, optimal_type, y_range)
